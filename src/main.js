@@ -244,7 +244,7 @@ let dropInterval = 500;
 let lastTime = 0;
 function update(time = 0) {
   const deltaTime = time - lastTime;
-  publish();
+
   dropCounter += deltaTime;
   if (dropCounter > dropInterval) {
     playerDrop();
@@ -267,17 +267,12 @@ function tetrisStream(message){
     playerRotate(1);
   }
 }
-pubnub.subscribe({
-  channels: ['tetris'],
-  withPresence: true,
-
-});
 function updateScore() {
   document.getElementById('score').innerText = player.score;
 }
 
 document.addEventListener('keydown', event => {
-
+  publish();
   if (event.keyCode === 37) {
     playerMove(-1);
   } else if (event.keyCode === 39) {
