@@ -29,19 +29,21 @@ function publish(key) {
       }
     }
     pubnub.publish(publishConfig, function(status, response) {
-      console.log("4: pub");
+      console.log(status, response);
     })
   }
 
   pubnub.addListener({
     status: function(statusEvent) {
       if (statusEvent.category === "PNConnectedCategory") {
-        console.log("5: pub")
+        publishSampleMessage();
       }
     },
     message: function(msg) {
-      console.log("6: pub");
-      console.log("7: pub");
+      console.log(msg.message.title);
+      console.log(msg.message.description);
+      console.log("4: pub");
+      console.log("5: pub");
     },
     presence: function(presenceEvent) {
       // handle presence
@@ -51,7 +53,7 @@ function publish(key) {
   pubnub.subscribe({
     channels: ['hello_world']
   });
-}
+};
 function arenaSweep() {
   let rowCount = 1;
   outer: for (let y = arena.length -1; y > 0; --y) {
