@@ -9,7 +9,8 @@ var channel = 'tetris';
 
 const pubnub = new PubNub({
   publishKey : "pub-c-d99d7542-4d07-43c0-a3e1-2aee03cf4db8",
-  subscribeKey : "sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf"
+  subscribeKey : "sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf",
+  uuid: "joeIsAbitch"
 });
 
 function arenaSweep() {
@@ -233,11 +234,21 @@ function updateScore() {
 
 document.addEventListener('keydown', event => {
   pubnub.subscribe({
-    channel: "tetris",
+    channel: ['my_channel'],
+    withPresence: true,
     callback: tetrisStream(event.keyCode)
   });
+  pubnub.hereNow(
+    {
+      includeUUIDs: true,
+      includeState: true
+    },
+    function (status, response) {
+      console.log(response.totalOccupancy);
+    }
+  );
   let publishConfig = {
-    channel : "tetris",
+    channel : ['my_channel'],
     message : event.keyCode
   };
   pubnub.publish(publishConfig, function(status, response) {
