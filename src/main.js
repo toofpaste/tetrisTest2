@@ -3,6 +3,15 @@ const context = canvas.getContext('2d');
 
 context.scale(20, 20);
 
+
+var channel = 'tetris';
+
+var pubnub = PUBNUB.init({
+  publishKey : "pub-c-d99d7542-4d07-43c0-a3e1-2aee03cf4db8",
+  subscribeKey : "sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf",
+  ssl: true
+});
+
 function arenaSweep() {
   let rowCount = 1;
   outer: for (let y = arena.length -1; y > 0; --y) {
@@ -189,10 +198,14 @@ function playerRotate(dir) {
 }
 
 let dropCounter = 0;
-let dropInterval = 500 - (player.score * 10);
+let dropInterval = 500;
 
 let lastTime = 0;
 function update(time = 0) {
+  pubnub.subscribe({
+    channel: channel,
+    callback: tetrisStream
+  });
   const deltaTime = time - lastTime;
 
   dropCounter += deltaTime;
@@ -205,12 +218,30 @@ function update(time = 0) {
   draw();
   requestAnimationFrame(update);
 }
+function tetrisStream(message){
+  if(!message) return;
+  if (message === 37) {
+    playerMove(-1);
+  } else if (message === 39) {
+    playerMove(1);
+  } else if (message === 40) {
+    playerDrop();
+  } else if (message === 38) {
+    playerRotate(1);
+  }
+}
 
 function updateScore() {
   document.getElementById('score').innerText = player.score;
 }
 
 document.addEventListener('keydown', event => {
+  pubnub.publish({
+    channel: channel,
+    message: {
+      plots: event.keyCode // your array goes here
+    }
+  });
   if (event.keyCode === 37) {
     playerMove(-1);
   } else if (event.keyCode === 39) {
