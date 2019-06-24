@@ -23,7 +23,7 @@ function publish(key) {
     var publishConfig = {
       channel : "hello_world",
       message : {
-        title: "2: pub",
+        title: key,
         description: "3: pub"
       }
     }
@@ -41,7 +41,7 @@ function publish(key) {
       }
     },
     message: function(msg) {
-      //console.log(msg.message.title);
+      console.log(msg.message.title);
       //console.log(msg.message.description);
       console.log("4: pub");
       console.log("5: pub");
