@@ -233,7 +233,7 @@ function updateScore() {
 
 document.addEventListener('keydown', event => {
   pubnub.subscribe({
-    channel: channel,
+    channel: "tetris",
     callback: tetrisStream(event.keyCode)
   });
   let publishConfig = {
