@@ -19,7 +19,7 @@ function publish(key) {
     subscribeKey : 'sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf'
   })
   function publishSampleMessage() {
-    //console.log("1: pub");
+    console.log("1: pub");
     var publishConfig = {
       channel : "hello_world",
       message : {
@@ -29,7 +29,7 @@ function publish(key) {
       }
     }
     pubnub.publish(publishConfig, function(status, response) {
-      //console.log(status, response);
+      console.log(status, response);
     })
     //console.log(publishConfig.message.title);
   }
@@ -38,13 +38,14 @@ function publish(key) {
       message: {
         such: key
       },
-      channel: 'hello_world',
-      sendByPost: false, // true to send via post
+      channel: "hello_world",
+      sendByPost: true, // true to send via post
       meta: {
         "cool": "meta"
       }   // fire extra meta with the request
     },
     function (status, response) {
+      console.log("GO GO GO")
       if (status.error) {
         // handle error
         console.log("pause");
@@ -60,7 +61,7 @@ function publish(key) {
       }
     },
     message: function(msg) {
-      //console.log(msg.message.title)
+      console.log(msg.message.title)
         //tetrisStream(key);
        // console.log(msg.message.title);
       //console.log(msg.message.description);
