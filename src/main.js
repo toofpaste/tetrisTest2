@@ -13,39 +13,38 @@ var pubnub = new PubNub({
 })
 
 function publish(key) {
-  let i = 0;
+
   pubnub = new PubNub({
     publishKey : 'demo',
     subscribeKey : 'demo'
   })
+
   function publishSampleMessage() {
+    console.log("1: pub");
     var publishConfig = {
       channel : "hello_world",
-      storeInHistory: false,
       message : {
-        title: "5 pub",
-        description: "6 pub"
+        title: "2: pub",
+        description: "3: pub"
       }
     }
     pubnub.publish(publishConfig, function(status, response) {
-      console.log("1 pub");
+      console.log("4: pub");
     })
   }
 
   pubnub.addListener({
     status: function(statusEvent) {
       if (statusEvent.category === "PNConnectedCategory") {
-        if(i === 0) {
-          console.log("3 pub");
-          i++;
-        }
+        console.log("5: pub")
       }
     },
     message: function(msg) {
-      console.log("2: pub");
+      console.log("6: pub");
+      console.log("7: pub");
     },
     presence: function(presenceEvent) {
-      console.log("4: pub");
+      // handle presence
     }
   })
   console.log("Subscribing..");
@@ -53,7 +52,6 @@ function publish(key) {
     channels: ['hello_world']
   });
 }
-
 function arenaSweep() {
   let rowCount = 1;
   outer: for (let y = arena.length -1; y > 0; --y) {
