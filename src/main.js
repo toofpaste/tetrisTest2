@@ -14,17 +14,21 @@ var pubnub = new PubNub({
 
 function publish(key) {
   let i = 0;
+  pubnub = new PubNub({
+    publishKey : 'demo',
+    subscribeKey : 'demo'
+  })
   function publishSampleMessage() {
     var publishConfig = {
       channel : "hello_world",
       storeInHistory: false,
       message : {
-        title: key,
-        description: key
+        title: "5 pub",
+        description: "6 pub"
       }
     }
     pubnub.publish(publishConfig, function(status, response) {
-      tetrisStream(key);
+      console.log("1 pub");
     })
   }
 
@@ -32,16 +36,16 @@ function publish(key) {
     status: function(statusEvent) {
       if (statusEvent.category === "PNConnectedCategory") {
         if(i === 0) {
-          console.log(key);
+          console.log("3 pub");
           i++;
         }
       }
     },
     message: function(msg) {
-      console.log(msg.message.title);
+      console.log("2: pub");
     },
     presence: function(presenceEvent) {
-      // handle presence
+      console.log("4: pub");
     }
   })
   console.log("Subscribing..");
