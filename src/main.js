@@ -40,7 +40,7 @@ function publish(key) {
       }
     },
     message: function(msg) {
-     // tetrisStream(msg.message.title);
+     tetrisStream(msg.message.title);
      console.log(msg.message.title);
       console.log(msg.message.description);
     },
@@ -49,8 +49,8 @@ function publish(key) {
   })
   console.log("Subscribing..");
   pubnub.subscribe({
-    channels: ['hello_world'],
-    callback: tetrisStream(key)
+    channels: ['hello_world']
+    //callback: tetrisStream(key)
   });
 }
 function arenaSweep() {
