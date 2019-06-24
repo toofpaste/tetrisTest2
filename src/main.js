@@ -244,7 +244,7 @@ let dropInterval = 500;
 let lastTime = 0;
 function update(time = 0) {
   const deltaTime = time - lastTime;
-
+  publish();
   dropCounter += deltaTime;
   if (dropCounter > dropInterval) {
     playerDrop();
