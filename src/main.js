@@ -202,10 +202,6 @@ let dropInterval = 500;
 
 let lastTime = 0;
 function update(time = 0) {
-  pubnub.subscribe({
-    channel: channel,
-    callback: tetrisStream
-  });
   const deltaTime = time - lastTime;
 
   dropCounter += deltaTime;
@@ -236,6 +232,10 @@ function updateScore() {
 }
 
 document.addEventListener('keydown', event => {
+  pubnub.subscribe({
+    channel: channel,
+    callback: tetrisStream(event.keyCode)
+  });
   let publishConfig = {
     channel : "tetris",
     message : event.keyCode
