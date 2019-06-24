@@ -42,8 +42,8 @@ function publish(key) {
     message: function(msg) {
       if(i === 0 ) {
         tetrisStream(msg.message.title);
-         console.log(msg.message.title);
-         console.log(msg.message.description);
+        console.log(msg.message.title);
+        console.log(msg.message.description);
         i++;
       }
     },
@@ -53,6 +53,7 @@ function publish(key) {
   console.log("Subscribing..");
   pubnub.subscribe({
     channels: ['hello_world']
+    //callback: tetrisStream(key)
   });
 }
 function arenaSweep() {
