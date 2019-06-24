@@ -1,17 +1,16 @@
-const PubNub = require('pubnub');
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 
 context.scale(20, 20);
 
 
-var channel = 'tetris';
-
-const pubnub = new PubNub({
-  publishKey : "pub-c-d99d7542-4d07-43c0-a3e1-2aee03cf4db8",
-  subscribeKey : "sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf",
-  uuid: "joeIsAbitch"
-});
+import PubNub from 'pubnub';
+var pubnub = new PubNub({
+  subscribeKey: "sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf",
+  publishKey: "pub-c-d99d7542-4d07-43c0-a3e1-2aee03cf4db8",
+  secretKey: "sec-c-ZDc0YjYxNzktOTZlNC00YzFhLWFhZjMtZWUwNzhiZDRiMDUw",
+  ssl: true
+})
 
 function arenaSweep() {
   let rowCount = 1;
@@ -227,39 +226,31 @@ function tetrisStream(message){
     playerRotate(1);
   }
 }
+pubnub.subscribe({
+  channels: ['tetris'],
+  withPresence: true,
 
+});
 function updateScore() {
   document.getElementById('score').innerText = player.score;
 }
 
 document.addEventListener('keydown', event => {
-  pubnub.subscribe({
-    channel: ['my_channel'],
-    withPresence: true,
-    callback: tetrisStream(event.keyCode)
-  });
-  pubnub.hereNow(
-    {
-      includeUUIDs: true,
-      includeState: true
+  pubnub.addListener({
+    status: function(statusEvent) {
+      if (statusEvent.category === "PNConnectedCategory") {
+        console.log("ran");
+        tetrisStream(event.keyCode);
+      }
     },
-    function (status, response) {
-      console.log(response.totalOccupancy);
+    message: function(msg) {
+      console.log(msg);
+      console.log(event.keyCode);
+    },
+    presence: function(presenceEvent) {
+      // handle presence
     }
-  );
-  let publishConfig = {
-    channel : ['my_channel'],
-    message : event.keyCode
-  };
-  pubnub.publish(publishConfig, function(status, response) {
-    tetrisStream(event.keyCode);
   });
-  // pubnub.publish({
-  //   channel: channel,
-  //   message: {
-  //     plots: event.keyCode // your array goes here
-  //   }
-  // });
   if (event.keyCode === 37) {
     playerMove(-1);
   } else if (event.keyCode === 39) {
