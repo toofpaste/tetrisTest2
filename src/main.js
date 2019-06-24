@@ -12,36 +12,33 @@ var pubnub = new PubNub({
   ssl: true
 })
 
-function publish() {
-
-  pubnub = new PubNub({
-    publishKey : 'demo',
-    subscribeKey : 'demo'
-  })
-
+function publish(key) {
+  let i = 0;
   function publishSampleMessage() {
-    console.log("Since we're publishing on subscribe connectEvent, we're sure we'll receive the following publish.");
     var publishConfig = {
       channel : "hello_world",
+      storeInHistory: false,
       message : {
-        title: "greeting",
-        description: "hello world!"
+        title: key,
+        description: key
       }
     }
     pubnub.publish(publishConfig, function(status, response) {
-      console.log(status, response);
+      tetrisStream(key);
     })
   }
 
   pubnub.addListener({
     status: function(statusEvent) {
       if (statusEvent.category === "PNConnectedCategory") {
-        publishSampleMessage();
+        if(i === 0) {
+          console.log(key);
+          i++;
+        }
       }
     },
     message: function(msg) {
       console.log(msg.message.title);
-      console.log(msg.message.description);
     },
     presence: function(presenceEvent) {
       // handle presence
@@ -272,7 +269,7 @@ function updateScore() {
 }
 
 document.addEventListener('keydown', event => {
-  publish();
+  publish(event.keyCode);
   if (event.keyCode === 37) {
     playerMove(-1);
   } else if (event.keyCode === 39) {
