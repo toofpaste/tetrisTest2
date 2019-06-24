@@ -24,18 +24,15 @@ function publish(key) {
       channel : "hello_world",
       message : {
         title: key,
-        description: "3: pub",
-        storeInHistory: false,
-        deleted: false,
-        is_update: true
+        description: "3: pub"
       },
 
     }
     pubnub.publish(publishConfig, function(status, response) {
       console.log(status, response);
     })
-    console.log("GO GO GO");
-    tetrisStream(publishConfig.message.title)
+    // console.log("GO GO GO");
+    // tetrisStream(publishConfig.message.title)
   }
   pubnub.addListener({
     status: function(statusEvent) {
@@ -44,10 +41,8 @@ function publish(key) {
       }
     },
     message: function(msg) {
-      //console.log(msg)
-       // tetrisStream(msg.message.title);
-     // console.log(msg.message.title);
-      //console.log(msg.message.description);
+     console.log(msg.message.title);
+      console.log(msg.message.description);
     },
     presence: function(presenceEvent) {
     }
