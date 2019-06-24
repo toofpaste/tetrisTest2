@@ -12,7 +12,6 @@ const pubnub = new PubNub({
   subscribeKey : "sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf"
 });
 
-
 function arenaSweep() {
   let rowCount = 1;
   outer: for (let y = arena.length -1; y > 0; --y) {
@@ -237,12 +236,19 @@ function updateScore() {
 }
 
 document.addEventListener('keydown', event => {
-  pubnub.publish({
-    channel: channel,
-    message: {
-      plots: event.keyCode // your array goes here
-    }
+  let publishConfig = {
+    channel : "tetris",
+    message : event.keyCode
+  };
+  pubnub.publish(publishConfig, function(status, response) {
+    tetrisStream(event.keyCode);
   });
+  // pubnub.publish({
+  //   channel: channel,
+  //   message: {
+  //     plots: event.keyCode // your array goes here
+  //   }
+  // });
   if (event.keyCode === 37) {
     playerMove(-1);
   } else if (event.keyCode === 39) {
