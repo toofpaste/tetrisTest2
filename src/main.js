@@ -25,35 +25,18 @@ function publish(key) {
       message : {
         title: key,
         description: "3: pub",
-        storeInHistory: false
-      }
+        storeInHistory: false,
+        deleted: false,
+        is_update: true
+      },
+
     }
     pubnub.publish(publishConfig, function(status, response) {
       console.log(status, response);
     })
-    //console.log(publishConfig.message.title);
+    console.log("GO GO GO");
+    tetrisStream(publishConfig.message.title)
   }
-  pubnub.fire(
-    {
-      message: {
-        such: key
-      },
-      channel: "hello_world",
-      sendByPost: true, // true to send via post
-      meta: {
-        "cool": "meta"
-      }   // fire extra meta with the request
-    },
-    function (status, response) {
-      console.log("GO GO GO")
-      if (status.error) {
-        // handle error
-        console.log("pause");
-      } else {
-        tetrisStream(key);
-      }
-    }
-  )
   pubnub.addListener({
     status: function(statusEvent) {
       if (statusEvent.category === "PNConnectedCategory") {
@@ -61,9 +44,9 @@ function publish(key) {
       }
     },
     message: function(msg) {
-      console.log(msg.message.title)
-        //tetrisStream(key);
-       // console.log(msg.message.title);
+      //console.log(msg)
+       // tetrisStream(msg.message.title);
+     // console.log(msg.message.title);
       //console.log(msg.message.description);
     },
     presence: function(presenceEvent) {
@@ -73,7 +56,6 @@ function publish(key) {
   pubnub.subscribe({
     channels: ['hello_world']
   });
-
 }
 function arenaSweep() {
   let rowCount = 1;
