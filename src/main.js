@@ -41,10 +41,11 @@ function publish(key) {
       }
     },
     message: function(msg) {
-      console.log(msg.message.title);
-      console.log(msg.message.description);
+      //console.log(msg.message.title);
+      //console.log(msg.message.description);
       console.log("4: pub");
       console.log("5: pub");
+      console.log("---------------");
     },
     presence: function(presenceEvent) {
       console.log("16 pub");
