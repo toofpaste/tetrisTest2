@@ -40,9 +40,12 @@ function publish(key) {
       }
     },
     message: function(msg) {
-     tetrisStream(msg.message.title);
-     console.log(msg.message.title);
-      console.log(msg.message.description);
+      if(i === 0 ) {
+        tetrisStream(msg.message.title);
+        console.log(msg.message.title);
+        console.log(msg.message.description);
+        i++;
+      }
     },
     presence: function(presenceEvent) {
     }
