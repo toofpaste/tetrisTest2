@@ -15,8 +15,8 @@ var pubnub = new PubNub({
 function publish(key) {
 
   pubnub = new PubNub({
-    publishKey : 'demo',
-    subscribeKey : 'demo'
+    publishKey : 'pub-c-d99d7542-4d07-43c0-a3e1-2aee03cf4db8',
+    subscribeKey : 'sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf'
   })
 
   function publishSampleMessage() {
