@@ -13,48 +13,66 @@ var pubnub = new PubNub({
 })
 
 function publish(key) {
-
+  let i = 0;
   pubnub = new PubNub({
     publishKey : 'pub-c-d99d7542-4d07-43c0-a3e1-2aee03cf4db8',
     subscribeKey : 'sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf'
   })
   function publishSampleMessage() {
-    console.log("1: pub");
+    //console.log("1: pub");
     var publishConfig = {
       channel : "hello_world",
       message : {
         title: key,
-        description: "3: pub"
+        description: "3: pub",
+        storeInHistory: false
       }
     }
     pubnub.publish(publishConfig, function(status, response) {
-      console.log(status, response);
-      console.log("9: pub");
+      //console.log(status, response);
     })
+    //console.log(publishConfig.message.title);
   }
-
+  pubnub.fire(
+    {
+      message: {
+        such: key
+      },
+      channel: 'hello_world',
+      sendByPost: false, // true to send via post
+      meta: {
+        "cool": "meta"
+      }   // fire extra meta with the request
+    },
+    function (status, response) {
+      if (status.error) {
+        // handle error
+        console.log("pause");
+      } else {
+        tetrisStream(key);
+      }
+    }
+  )
   pubnub.addListener({
     status: function(statusEvent) {
       if (statusEvent.category === "PNConnectedCategory") {
         publishSampleMessage();
-        console.log("10: pub");
       }
     },
     message: function(msg) {
-      console.log(msg.message.title);
+      //console.log(msg.message.title)
+        //tetrisStream(key);
+       // console.log(msg.message.title);
       //console.log(msg.message.description);
-      console.log("4: pub");
-      console.log("5: pub");
-      console.log("---------------");
     },
     presence: function(presenceEvent) {
-      console.log("16 pub");
     }
   })
   console.log("Subscribing..");
   pubnub.subscribe({
     channels: ['hello_world']
   });
+
 }
 function arenaSweep() {
   let rowCount = 1;
@@ -276,15 +294,15 @@ function updateScore() {
 
 document.addEventListener('keydown', event => {
   publish(event.keyCode);
-  if (event.keyCode === 37) {
-    playerMove(-1);
-  } else if (event.keyCode === 39) {
-    playerMove(1);
-  } else if (event.keyCode === 40) {
-    playerDrop();
-  } else if (event.keyCode === 38) {
-    playerRotate(1);
-  }
+  // if (event.keyCode === 37) {
+  //   playerMove(-1);
+  // } else if (event.keyCode === 39) {
+  //   playerMove(1);
+  // } else if (event.keyCode === 40) {
+  //   playerDrop();
+  // } else if (event.keyCode === 38) {
+  //   playerRotate(1);
+  // }
 });
 
 const colors = [
