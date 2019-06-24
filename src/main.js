@@ -23,7 +23,7 @@ function publish(key) {
     var publishConfig = {
       channel : "hello_world",
       message : {
-        title: key,
+        title: tetrisStream(key),
         description: "3: pub"
       }
     }
@@ -35,7 +35,6 @@ function publish(key) {
   pubnub.addListener({
     status: function(statusEvent) {
       if (statusEvent.category === "PNConnectedCategory") {
-        tetrisStream(key);
         publishSampleMessage();
       }
     },
