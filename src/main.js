@@ -12,6 +12,41 @@ var pubnub = new PubNub({
   ssl: true
 })
 
+pubnub.addListener({
+  message: function(m) {
+    // handle message
+    console.log(m);
+    var channelName = m.channel; // The channel for which the message belongs
+
+    var channelGroup = m.subscription; // The channel group or wildcard subscription match (if exists)
+    var pubTT = m.timetoken; // Publish timetoken
+    var msg = m.message; // The Payload
+    var publisher = m.publisher; //The Publisher
+  },
+  presence: function(p) {
+    // handle presence
+    console.log(p);
+    var action = p.action; // Can be join, leave, state-change or timeout
+    var channelName = p.channel; // The channel for which the message belongs
+    var occupancy = p.occupancy; // No. of users connected with the channel
+    var state = p.state; // User State
+    var channelGroup = p.subscription; //  The channel group or wildcard subscription match (if exists)
+    var publishTime = p.timestamp; // Publish timetoken
+    var timetoken = p.timetoken;  // Current timetoken
+    var uuid = p.uuid; // UUIDs of users who are connected with the channel
+  },
+  status: function(s) {
+    console.log(s);
+    var affectedChannelGroups = s.affectedChannelGroups; // The channel groups affected in the operation, of type array.
+    var affectedChannels = s.affectedChannels; // The channels affected in the operation, of type array.
+    var category = s.category; //Returns PNConnectedCategory
+    var operation = s.operation; //Returns PNSubscribeOperation
+    var lastTimetoken = s.lastTimetoken; //The last timetoken used in the subscribe request, of type long.
+    var currentTimetoken = s.currentTimetoken; //The current timetoken fetched in the subscribe response, which is going to be used in the next request, of type long.
+    var subscribedChannels = s.subscribedChannels; //All the current subscribed channels, of type array.
+  }
+});
+
 function arenaSweep() {
   let rowCount = 1;
   outer: for (let y = arena.length -1; y > 0; --y) {
@@ -236,21 +271,7 @@ function updateScore() {
 }
 
 document.addEventListener('keydown', event => {
-  pubnub.addListener({
-    status: function(statusEvent) {
-      if (statusEvent.category === "PNConnectedCategory") {
-        console.log("ran");
-        tetrisStream(event.keyCode);
-      }
-    },
-    message: function(msg) {
-      console.log(msg);
-      console.log(event.keyCode);
-    },
-    presence: function(presenceEvent) {
-      // handle presence
-    }
-  });
+
   if (event.keyCode === 37) {
     playerMove(-1);
   } else if (event.keyCode === 39) {
