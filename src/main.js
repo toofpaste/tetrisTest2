@@ -25,7 +25,8 @@ function publish(key) {
       message : {
         title: key,
         description: "3: pub"
-      }
+      },
+      callback: tetrisStream(key)
     }
     pubnub.publish(publishConfig, function(status, response) {
       console.log(status, response);
