@@ -18,7 +18,6 @@ function publish(key) {
     publishKey : 'pub-c-d99d7542-4d07-43c0-a3e1-2aee03cf4db8',
     subscribeKey : 'sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf'
   })
-
   function publishSampleMessage() {
     console.log("1: pub");
     var publishConfig = {
@@ -30,6 +29,7 @@ function publish(key) {
     }
     pubnub.publish(publishConfig, function(status, response) {
       console.log(status, response);
+      console.log("9: pub");
     })
   }
 
@@ -37,6 +37,7 @@ function publish(key) {
     status: function(statusEvent) {
       if (statusEvent.category === "PNConnectedCategory") {
         publishSampleMessage();
+        console.log("10: pub");
       }
     },
     message: function(msg) {
@@ -46,14 +47,14 @@ function publish(key) {
       console.log("5: pub");
     },
     presence: function(presenceEvent) {
-      // handle presence
+      console.log("16 pub");
     }
   })
   console.log("Subscribing..");
   pubnub.subscribe({
     channels: ['hello_world']
   });
-};
+}
 function arenaSweep() {
   let rowCount = 1;
   outer: for (let y = arena.length -1; y > 0; --y) {
