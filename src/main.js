@@ -24,7 +24,8 @@ function publish(key) {
       channel : "hello_world",
       message : {
         title: key,
-        description: "3: pub"
+        description: "3: pub",
+        deleted: true
       }
     }
     pubnub.publish(publishConfig, function(status, response) {
@@ -39,7 +40,7 @@ function publish(key) {
       }
     },
     message: function(msg) {
-      tetrisStream(msg.message.title);
+     // tetrisStream(msg.message.title);
      console.log(msg.message.title);
       console.log(msg.message.description);
     },
@@ -48,7 +49,8 @@ function publish(key) {
   })
   console.log("Subscribing..");
   pubnub.subscribe({
-    channels: ['hello_world']
+    channels: ['hello_world'],
+    callback: tetrisStream(key)
   });
 }
 function arenaSweep() {
