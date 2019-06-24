@@ -30,6 +30,7 @@ function publish(key) {
     pubnub.publish(publishConfig, function(status, response) {
       console.log(status, response);
     })
+    console.log("GO");
   }
   pubnub.addListener({
     status: function(statusEvent) {
