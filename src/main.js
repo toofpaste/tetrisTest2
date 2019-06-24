@@ -1,3 +1,4 @@
+const PubNub = require('pubnub');
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 
@@ -6,11 +7,11 @@ context.scale(20, 20);
 
 var channel = 'tetris';
 
-var pubnub = PUBNUB.init({
+const pubnub = new PubNub({
   publishKey : "pub-c-d99d7542-4d07-43c0-a3e1-2aee03cf4db8",
-  subscribeKey : "sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf",
-  ssl: true
+  subscribeKey : "sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf"
 });
+
 
 function arenaSweep() {
   let rowCount = 1;
