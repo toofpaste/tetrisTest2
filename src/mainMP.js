@@ -10,14 +10,14 @@ var pubnub = new PubNub({
   publishKey: "pub-c-d99d7542-4d07-43c0-a3e1-2aee03cf4db8",
   secretKey: "sec-c-ZDc0YjYxNzktOTZlNC00YzFhLWFhZjMtZWUwNzhiZDRiMDUw",
   ssl: true
-})
+});
 
 function publish(key) {
   i = 0;
   pubnub = new PubNub({
     publishKey : 'pub-c-d99d7542-4d07-43c0-a3e1-2aee03cf4db8',
     subscribeKey : 'sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf'
-  })
+  });
   function publishSampleMessage() {
     console.log("1: pub");
     i = 0;
@@ -28,10 +28,10 @@ function publish(key) {
         description: "3: pub",
         deleted: true
       }
-    }
+    };
     pubnub.publish(publishConfig, function(status, response) {
       console.log(status, response);
-    })
+    });
   }
   pubnub.addListener({
     status: function(statusEvent) {
@@ -54,7 +54,7 @@ function publish(key) {
     },
     presence: function(presenceEvent) {
     }
-  })
+  });
   console.log("Subscribing..");
   pubnub.subscribe({
     channels: ['hello_world']
