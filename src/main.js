@@ -13,16 +13,14 @@ var pubnub = new PubNub({
 })
 
 function publish(key) {
-  let i = 0;
   i = 0;
-  i = 0;
-
   pubnub = new PubNub({
     publishKey : 'pub-c-d99d7542-4d07-43c0-a3e1-2aee03cf4db8',
     subscribeKey : 'sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf'
   })
   function publishSampleMessage() {
     console.log("1: pub");
+    i = 0;
     var publishConfig = {
       channel : "hello_world",
       message : {
@@ -44,8 +42,9 @@ function publish(key) {
     },
     message: function(msg) {
       //tetrisStream(msg.message.title);
-      console.log(msg.message.title);
-      console.log(msg.message.description);
+      console.log("i = " + i);
+
+      //console.log(msg.message.description);
       if(i == 0 ) {
         tetrisStream(msg.message.title);
         console.log(msg.message.title);
@@ -249,6 +248,7 @@ function playerRotate(dir) {
 
 let dropCounter = 0;
 let dropInterval = 500;
+let i = 0;
 
 let lastTime = 0;
 function update(time = 0) {
@@ -257,6 +257,7 @@ function update(time = 0) {
   dropCounter += deltaTime;
   if (dropCounter > dropInterval) {
     playerDrop();
+    i = 0;
   }
 
   lastTime = time;
@@ -281,7 +282,7 @@ function updateScore() {
 }
 
 document.addEventListener('keydown', event => {
-  publish(event.keyCode);
+  publish(event.keyCode, i);
   // if (event.keyCode === 37) {
   //   playerMove(-1);
   // } else if (event.keyCode === 39) {
