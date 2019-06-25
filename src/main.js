@@ -31,7 +31,6 @@ function publish(key) {
     pubnub.publish(publishConfig, function(status, response) {
       console.log(status, response);
     })
-    console.log("GO");
   }
   pubnub.addListener({
     status: function(statusEvent) {
@@ -40,12 +39,15 @@ function publish(key) {
       }
     },
     message: function(msg) {
-      if(i === 0 ) {
-        tetrisStream(msg.message.title);
-        console.log(msg.message.title);
-        console.log(msg.message.description);
-        i++;
-      }
+      tetrisStream(msg.message.title);
+      console.log(msg.message.title);
+      console.log(msg.message.description);
+      // if(i === 0 ) {
+      //   tetrisStream(msg.message.title);
+      //   console.log(msg.message.title);
+      //   console.log(msg.message.description);
+      //   i++;
+      // }
     },
     presence: function(presenceEvent) {
     }
