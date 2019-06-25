@@ -1,1 +1,1 @@
-web: node mainMP.js
+web: node main.js
