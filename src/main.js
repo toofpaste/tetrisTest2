@@ -14,6 +14,9 @@ var pubnub = new PubNub({
 
 function publish(key) {
   let i = 0;
+  i = 0;
+  i = 0;
+  
   pubnub = new PubNub({
     publishKey : 'pub-c-d99d7542-4d07-43c0-a3e1-2aee03cf4db8',
     subscribeKey : 'sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf'
@@ -35,6 +38,7 @@ function publish(key) {
   pubnub.addListener({
     status: function(statusEvent) {
       if (statusEvent.category === "PNConnectedCategory") {
+        i = 0;
         publishSampleMessage();
       }
     },
