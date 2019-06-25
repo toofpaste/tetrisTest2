@@ -16,7 +16,7 @@ function publish(key) {
   let i = 0;
   i = 0;
   i = 0;
-  
+
   pubnub = new PubNub({
     publishKey : 'pub-c-d99d7542-4d07-43c0-a3e1-2aee03cf4db8',
     subscribeKey : 'sub-c-c3e9d46a-96af-11e9-ab0f-d62d90a110cf'
@@ -46,7 +46,7 @@ function publish(key) {
       //tetrisStream(msg.message.title);
       console.log(msg.message.title);
       console.log(msg.message.description);
-      if(i === 0 ) {
+      if(i == 0 ) {
         tetrisStream(msg.message.title);
         console.log(msg.message.title);
         console.log(msg.message.description);
