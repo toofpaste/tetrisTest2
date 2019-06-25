@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = {
-    entry: './src/main.js',
+    entry: './src/mainMP.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
@@ -19,7 +19,7 @@ module.exports = {
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             title: 'My Project',
-            template: './src/index.html',
+            template: './src/indexMP.html',
             inject: 'body'
         })
     ],
